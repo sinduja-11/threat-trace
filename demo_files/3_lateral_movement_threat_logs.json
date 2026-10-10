@@ -1,0 +1,43 @@
+[
+  {
+    "event_code": "EVT-4001",
+    "event_time": "2026-10-10T10:15:00",
+    "event_type": "AUTHENTICATION",
+    "severity": "MEDIUM",
+    "user_name": "svc_backup",
+    "process_name": "lsass.exe",
+    "target": "DC-CORP-01",
+    "source": "192.168.1.45",
+    "description": "Network authentication attempt using NTLM hash",
+    "hostname": "dc01.corp.internal",
+    "raw_payload": "NTLM SSP Auth user=svc_backup workstation=WKSTN-FIN-04"
+  },
+  {
+    "event_code": "EVT-4002",
+    "event_time": "2026-10-10T10:16:30",
+    "event_type": "PROCESS",
+    "severity": "HIGH",
+    "user_name": "SYSTEM",
+    "process_name": "psexesvc.exe",
+    "target": "C:\\Windows\\psexesvc.exe",
+    "source": "192.168.1.45",
+    "description": "PsExec service creation and execution on Domain Controller",
+    "hostname": "dc01.corp.internal",
+    "parent_event_id": "EVT-4001",
+    "raw_payload": "Service Installed: PSEXESVC ImagePath=C:\\Windows\\psexesvc.exe"
+  },
+  {
+    "event_code": "EVT-4003",
+    "event_time": "2026-10-10T10:18:00",
+    "event_type": "PROCESS",
+    "severity": "CRITICAL",
+    "user_name": "SYSTEM",
+    "process_name": "ntdsutil.exe",
+    "target": "Active Directory Database",
+    "source": "psexesvc.exe",
+    "description": "Active Directory NTDS.dit snapshot created for domain hash extraction",
+    "hostname": "dc01.corp.internal",
+    "parent_event_id": "EVT-4002",
+    "raw_payload": "ntdsutil \"ac i ntds\" \"ifm\" \"create full C:\\AD_Backup\" q q"
+  }
+]

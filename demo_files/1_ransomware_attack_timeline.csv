@@ -1,0 +1,7 @@
+event_code,event_time,event_type,severity,user_name,process_name,target,source,description,hostname,parent_event_id,raw_payload
+EVT-2001,2026-10-10 08:30:00,LOGIN,LOW,john_finance,explorer.exe,FIN-LAPTOP-01,LOCAL,User login successful,fin-laptop-01.corp.internal,,User login john_finance on fin-laptop-01
+EVT-2002,2026-10-10 08:31:15,PROCESS,LOW,john_finance,outlook.exe,Invoice_Payment.xlsm,C:\Program Files\Microsoft Office\Office16,Outlook opened email attachment,fin-laptop-01.corp.internal,EVT-2001,outlook.exe /f C:\Users\john\AppData\Local\Temp\Invoice_Payment.xlsm
+EVT-2003,2026-10-10 08:31:18,PROCESS,HIGH,john_finance,excel.exe,cmd.exe,Invoice_Payment.xlsm,Excel Macro launched command interpreter,fin-laptop-01.corp.internal,EVT-2002,excel.exe -> cmd.exe /c powershell -ExecutionPolicy Bypass -e aW52b2tl...
+EVT-2004,2026-10-10 08:31:22,PROCESS,CRITICAL,john_finance,powershell.exe,vssadmin.exe,cmd.exe,PowerShell attempting to delete Volume Shadow Copies,fin-laptop-01.corp.internal,EVT-2003,powershell.exe vssadmin.exe delete shadows /all /quiet
+EVT-2005,2026-10-10 08:32:00,FILE,CRITICAL,SYSTEM,encrypter.exe,C:\Finance\Database.mdf,powershell.exe,Ransomware payload encrypting critical database files,fin-laptop-01.corp.internal,EVT-2004,encrypter.exe --target C:\Finance\ --key RSA-4096
+EVT-2006,2026-10-10 08:32:45,NETWORK,CRITICAL,SYSTEM,encrypter.exe,198.51.100.44:8443,172.16.10.45:51234,C2 payment key exfiltration to remote host,fin-laptop-01.corp.internal,EVT-2005,TCP 172.16.10.45:51234 -> 198.51.100.44:8443 ESTABLISHED

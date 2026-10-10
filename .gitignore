@@ -1,6 +1,7 @@
-﻿target/
+target/
 *.class
-build.log
-build_utf8.txt
+*.log
+*_utf8.txt
 desktop.ini
 .env
+
