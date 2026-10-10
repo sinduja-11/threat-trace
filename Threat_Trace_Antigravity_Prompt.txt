@@ -1,0 +1,90 @@
+You are implementing my existing project Threat Trace, a defensive
+cybersecurity forensic-investigation platform. First inspect the current
+workspace/repository and the attached Threat Trace project concept
+before changing anything. Do not immediately generate a huge codebase.
+
+PRIMARY REQUIREMENTS 1. Use Java as the main implementation language.
+Use MySQL for the relational database. 2. Use C++ only for optional,
+separate syllabus demonstration modules where Java cannot naturally
+demonstrate the topic (e.g. pointers/pointers-to-pointers, manual
+new/delete, destructors/RAII, function pointers, virtual functions).
+Python is optional only for synthetic-data generation or a small helper.
+Do not shift the core app to C++ or Python. 3. Build a working MVP:
+CSV/JSON event import and validation, investigation cases, event
+timeline, process-lineage reconstruction using parent_event_id, Cyber
+Kill Chain rule mapping, explainable Attack DNA feature summary,
+explainable risk scoring, mitigation recommendations, analyst notes, and
+report export. 4. Use safe fictional sample data. This is a defensive
+analysis tool. Do not run attacks, collect real endpoint data without
+permission, or describe actor similarity as proof of identity. 5. Use a
+normalized MySQL schema with primary/foreign keys, constraints, indexes,
+transactions, seed data, and documented SQL queries. Include an ER
+diagram and relational-schema mapping. 6. Implement DBMS syllabus
+evidence: relational model and keys; relational algebra examples
+(selection, projection, joins, set operations where relevant); SQL
+DDL/DML and intermediate SQL; joins, aggregation, GROUP BY/HAVING,
+subqueries, functional dependencies, 1NF/2NF/3NF/BCNF reasoning, and 4NF
+discussion only where a real multivalued dependency exists or via a
+separate teaching example. Include recursive CTE for process ancestry if
+the MySQL version supports it, with Java traversal fallback. 7. Apply
+OOP concepts only where meaningful: classes/objects, encapsulation,
+access modifiers, constructors, method overloading/overriding,
+inheritance and polymorphism where appropriate, abstract
+classes/interfaces, composition, static/final, exceptions, packages,
+collections/generics, iterators, recursion, String/StringBuilder,
+wrapper types, Math, Date-Time, file I/O, comparators, and serialization
+formats. Add optional isolated concept demos for syllabus topics that
+should not be forced into the main app. 8. Optional concurrency:
+implement background imports or analysis only if it can be done safely
+and tested. If implemented, demonstrate Runnable/thread
+coordination/interruption and document thread-safety. 9. Write
+beginner-friendly explanation documents using the actual code: -
+docs/CONCEPTS_USED_WHERE.md - docs/ARCHITECTURE.md -
+docs/DATABASE_DESIGN.md - docs/SETUP_AND_DEMO.md - docs/TESTING.md Every
+concept entry must say the syllabus unit/topic, exact file/class/method,
+why it is used, how it works in simple terms, a real code excerpt, a
+step-by-step execution example, alternatives/trade-offs, implementation
+status, evidence/test link, and likely viva questions with answers for
+major groups. 10. The concepts document must separate: implemented in
+core Java, implemented in optional C++, implemented in optional Python,
+explained only/not implemented. Do not mark a concept as implemented
+unless the source code actually demonstrates it. Keep the document
+updated when code changes. 11. Create tests for import validation,
+process-tree reconstruction, cycle/missing-parent handling, Kill Chain
+mapping, risk calculation, mitigation ranking, and report generation.
+Add sample datasets including normal events, suspicious fictional
+sequences, duplicate rows, invalid timestamps, missing parents, and
+cyclic references. 12. The scoring formula must be documented,
+deterministic, configurable/versioned, and explain the contribution of
+each factor. Attack DNA must use explicit features such as event
+sequence, timing, targets, categories, and progression. Similarity is
+only an investigative lead, not definitive attribution.
+
+WORK PROCESS - Phase 1: Inspect the workspace, identify the current
+language/framework/files, and report a short implementation plan plus
+any risks. Do not overwrite existing files. - Phase 2: Propose/finalize
+the ERD and schema. Implement database scripts and seed data; verify
+constraints. - Phase 3: Implement Java domain/service/repository layers
+and tests. - Phase 4: Implement core analysis services and report
+export. - Phase 5: Implement UI/API and connect it to persisted data. -
+Phase 6: Write and verify documentation against the code. - Phase 7: Run
+tests/build and fix issues. If you cannot run a command, say so
+honestly. - After each phase, report changed files, commands run, test
+results, and remaining work. Ask before destructive changes or major
+stack changes.
+
+ACCEPTANCE CHECKLIST - A new developer can follow setup instructions and
+run the app. - Sample events import into MySQL and display in a case
+timeline. - Process lineage handles missing references and cycles
+without hanging. - Every Kill Chain classification has an explanation. -
+Risk output includes a score breakdown and documented formula. -
+Mitigation recommendations include rationale and ranking. - Reports
+export correctly. - ERD, relational schema, keys, functional
+dependencies, normalization reasoning, and SQL examples are included. -
+docs/CONCEPTS_USED_WHERE.md accurately maps syllabus topics to actual
+source files and demos. - Automated tests run, and results are reported
+without fabrication.
+
+Start with Phase 1 only: inspect the workspace and return the plan
+before making broad changes. Then proceed in small, testable phases. Use
+the supplied project idea document as the requirements baseline.

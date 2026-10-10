@@ -1,0 +1,4 @@
+event_code,event_time,event_type,severity,hostname,user_name,process_name,parent_event_id,target,description
+EVT-NORM-01,2026-10-09 08:00:00,LOGIN,LOW,fin-desk-04.corp.internal,bob_finance,explorer.exe,,fin-desk-04,User logon initiated
+EVT-NORM-02,2026-10-09 08:05:10,PROCESS,LOW,fin-desk-04.corp.internal,bob_finance,chrome.exe,EVT-NORM-01,https://portal.corp.internal,Browser opened internal intranet
+EVT-NORM-03,2026-10-09 08:12:00,PROCESS,LOW,fin-desk-04.corp.internal,bob_finance,excel.exe,EVT-NORM-01,Q3_Report.xlsx,User opened spreadsheet

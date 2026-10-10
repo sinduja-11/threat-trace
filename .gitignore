@@ -1,0 +1,6 @@
+﻿target/
+*.class
+build.log
+build_utf8.txt
+desktop.ini
+.env

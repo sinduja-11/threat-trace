@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Trace | Forensic Investigation & Incident Timeline Reconstruction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="top-header">
+            <div class="brand">
+                <div class="logo-icon">⚡</div>
+                <div class="brand-text">
+                    <h1>THREAT TRACE</h1>
+                    <span class="subtext">DEFENSIVE FORENSIC & INCIDENT TIMELINE ENGINE</span>
+                </div>
+            </div>
+
+            <div class="case-selector-bar">
+                <label for="caseSelect">ACTIVE CASE:</label>
+                <select id="caseSelect" onchange="loadCaseData(this.value)">
+                    <option value="1">CASE-2026-001 - Suspicious Macro Execution & C2</option>
+                    <option value="2">CASE-2026-002 - Routine Admin Logins</option>
+                </select>
+                <button class="btn btn-primary" onclick="openUploadModal()">+ Import Log File</button>
+                <button class="btn btn-secondary" onclick="openNewCaseModal()">+ New Case</button>
+            </div>
+        </header>
+
+        <!-- KPI Metrics Banner -->
+        <section class="kpi-banner">
+            <div class="kpi-card">
+                <span class="kpi-title">TOTAL EVENTS</span>
+                <span class="kpi-value" id="kpiTotalEvents">0</span>
+                <span class="kpi-subtitle">Ingested log entries</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">RISK SCORE</span>
+                <span class="kpi-value risk-badge" id="kpiRiskScore">0.0</span>
+                <span class="kpi-subtitle" id="kpiSeverityLevel">SEVERITY: LOW</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">LEAD THREAT ACTOR</span>
+                <span class="kpi-value highlight-cyan" id="kpiLeadActor">ANALYZING...</span>
+                <span class="kpi-subtitle" id="kpiActorSimilarity">0.0% Behavioral Similarity</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-title">KILL CHAIN STAGES</span>
+                <span class="kpi-value highlight-purple" id="kpiStagesCount">0 / 7</span>
+                <span class="kpi-subtitle">Attack progression mapped</span>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('timelineTab')">⏱ Timeline View</button>
+            <button class="tab-btn" onclick="switchTab('lineageTab')">🌳 Process Lineage Tree</button>
+            <button class="tab-btn" onclick="switchTab('killChainTab')">🎯 Cyber Kill Chain & DNA</button>
+            <button class="tab-btn" onclick="switchTab('riskTab')">📊 Explainable Risk Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('mitigationTab')">🛡 Mitigation Recommendations</button>
+            <button class="tab-btn" onclick="switchTab('notesTab')">📝 Analyst Notes & Export</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            
+            <!-- 1. TIMELINE TAB -->
+            <div id="timelineTab" class="tab-content active">
+                <div class="filter-toolbar">
+                    <div class="filter-group">
+                        <label>Event Type:</label>
+                        <select id="filterEventType" onchange="applyTimelineFilters()">
+                            <option value="">All Types</option>
+                            <option value="PROCESS">PROCESS</option>
+                            <option value="NETWORK">NETWORK</option>
+                            <option value="FILE">FILE</option>
+                            <option value="LOGIN">LOGIN</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Severity:</label>
+                        <select id="filterSeverity" onchange="applyTimelineFilters()">
+                            <option value="">All Severities</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                            <option value="HIGH">HIGH</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="LOW">LOW</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Hostname Search:</label>
+                        <input type="text" id="filterHostname" placeholder="Search host..." onkeyup="applyTimelineFilters()">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Timestamp</th>
+                                <th>Type</th>
+                                <th>Severity</th>
+                                <th>Host / Device</th>
+                                <th>Process / User</th>
+                                <th>Target / Source</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timelineTableBody">
+                            <tr><td colspan="8" class="text-center">Loading event logs...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 2. PROCESS LINEAGE TREE TAB -->
+            <div id="lineageTab" class="tab-content">
+                <div class="lineage-header">
+                    <h3>Reconstructed Parent-Child Process Hierarchy</h3>
+                    <span class="help-text">Visualizes execution ancestry derived from parent_event_id self-references with cycle guards.</span>
+                </div>
+                <div class="process-tree-container" id="processTreeContainer">
+                    <!-- Dynamic Process Nodes Rendered Here -->
+                </div>
+            </div>
+
+            <!-- 3. CYBER KILL CHAIN & ATTACK DNA TAB -->
+            <div id="killChainTab" class="tab-content">
+                <div class="kill-chain-container">
+                    <h3>Cyber Kill Chain Stage Progression</h3>
+                    <div class="kill-chain-pipeline" id="killChainPipeline">
+                        <!-- 7 Pipeline Stages Rendered Here -->
+                    </div>
+                </div>
+
+                <div class="dna-summary-card">
+                    <h3>Behavioral Attack DNA Fingerprint</h3>
+                    <div class="dna-grid">
+                        <div class="dna-item">
+                            <span class="label">Observed Event Sequence:</span>
+                            <div class="sequence-chips" id="dnaSequence"></div>
+                        </div>
+                        <div class="dna-item">
+                            <span class="label">Lead Threat Actor Profile:</span>
+                            <div class="lead-actor-badge" id="dnaLeadActorBadge">PHANTOM_SPIDER (85% Lead Match)</div>
+                            <p class="disclaimer">Note: Lead similarity is an investigative lead, not definitive attribution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. EXPLAINABLE RISK BREAKDOWN TAB -->
+            <div id="riskTab" class="tab-content">
+                <div class="risk-breakdown-card">
+                    <div class="score-header">
+                        <h2>OVERALL RISK SCORE: <span id="riskTotalScoreDisplay">0.0</span> / 100.0</h2>
+                        <button class="btn btn-primary" onclick="recalculateRisk()">Recalculate Score</button>
+                    </div>
+                    <div class="breakdown-factors" id="riskFactorBreakdownList">
+                        <!-- Factors list dynamically populated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. MITIGATION RECOMMENDATIONS TAB -->
+            <div id="mitigationTab" class="tab-content">
+                <div class="mitigation-header-bar">
+                    <h3>Ranked Defensive Mitigations</h3>
+                    <div class="filter-group">
+                        <label>Ranking Strategy:</label>
+                        <select id="mitigationStrategySelect" onchange="loadMitigations()">
+                            <option value="MAX_RISK_REDUCTION">Maximum Risk Reduction</option>
+                            <option value="LOWEST_EFFORT_FIRST">Lowest Analyst Effort</option>
+                            <option value="MINIMAL_BUSINESS_IMPACT">Minimal Business Impact</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mitigations-grid" id="mitigationsGrid">
+                    <!-- Mitigation Cards populated here -->
+                </div>
+            </div>
+
+            <!-- 6. ANALYST NOTES & EXPORT TAB -->
+            <div id="notesTab" class="tab-content">
+                <div class="notes-export-grid">
+                    <div class="card notes-card">
+                        <h3>Analyst Case Annotations</h3>
+                        <div class="note-input-box">
+                            <textarea id="noteTextInput" placeholder="Enter findings, evidence notes, or false-positive notes..."></textarea>
+                            <div class="note-actions">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="falsePositiveCheckbox"> Flag as False Positive
+                                </label>
+                                <button class="btn btn-primary" onclick="addAnalystNote()">Add Note</button>
+                            </div>
+                        </div>
+                        <div class="notes-list" id="analystNotesList">
+                            <!-- Notes populated here -->
+                        </div>
+                    </div>
+
+                    <div class="card export-card">
+                        <h3>Export Investigation Report</h3>
+                        <p>Generate evidence handoff report in desired format:</p>
+                        <div class="export-buttons">
+                            <button class="btn btn-secondary" onclick="exportReport('TEXT')">📄 Export Text Report</button>
+                            <button class="btn btn-secondary" onclick="exportReport('JSON')">📦 Export JSON Report</button>
+                            <button class="btn btn-secondary" onclick="exportReport('CSV')">📊 Export CSV Events</button>
+                        </div>
+                        <div id="exportStatusMessage" class="status-message"></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Upload File Modal -->
+    <div id="uploadModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Import Security Event Logs</h3>
+            <p>Select CSV or JSON file with endpoint event data:</p>
+            <input type="file" id="logFileInput" accept=".csv,.json">
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="uploadLogFile()">Upload & Parse</button>
+                <button class="btn btn-secondary" onclick="closeUploadModal()">Cancel</button>
+            </div>
+            <div id="uploadStatus" class="status-message"></div>
+        </div>
+    </div>
+
+    <!-- New Case Modal -->
+    <div id="newCaseModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Create New Investigation Case</h3>
+            <div class="form-group">
+                <label>Case Number:</label>
+                <input type="text" id="newCaseNumber" placeholder="CASE-2026-003">
+            </div>
+            <div class="form-group">
+                <label>Case Title:</label>
+                <input type="text" id="newCaseTitle" placeholder="e.g., Malware Outbreak on Server">
+            </div>
+            <div class="form-group">
+                <label>Description:</label>
+                <textarea id="newCaseDesc" placeholder="Brief summary of reported incident..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="createNewCase()">Create Case</button>
+                <button class="btn btn-secondary" onclick="closeNewCaseModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

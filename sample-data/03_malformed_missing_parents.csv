@@ -1,0 +1,4 @@
+event_code,event_time,event_type,severity,hostname,user_name,process_name,parent_event_id,target,description
+EVT-BAD-01,INVALID_DATE_TIME,PROCESS,LOW,fin-desk-04.corp.internal,alice,notepad.exe,,test.txt,Invalid timestamp test
+EVT-BAD-02,2026-10-09 10:00:00,PROCESS,HIGH,fin-desk-04.corp.internal,alice,cmd.exe,EVT-NON-EXISTENT-999,dir,Missing parent ID reference test
+,2026-10-09 10:05:00,LOGIN,LOW,,alice,explorer.exe,,,Missing mandatory event_code & hostname

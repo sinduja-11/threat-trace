@@ -1,0 +1,7 @@
+event_code,event_time,event_type,severity,hostname,user_name,process_name,parent_event_id,target,description,raw_payload
+EVT-ATTACK-01,2026-10-09 09:15:00,LOGIN,LOW,fin-desk-04.corp.internal,alice_finance,explorer.exe,,WKSTN-FIN-04,User session logon,LogonType 2
+EVT-ATTACK-02,2026-10-09 09:16:30,PROCESS,LOW,alice_finance,WINWORD.EXE,EVT-ATTACK-01,Invoice_Q3.docm,Word document opened,WINWORD.EXE Invoice_Q3.docm
+EVT-ATTACK-03,2026-10-09 09:16:32,PROCESS,HIGH,alice_finance,cmd.exe,EVT-ATTACK-02,cmd.exe /c powershell.exe,Word spawned cmd shell,cmd.exe /c powershell.exe -e aW52b2tl...
+EVT-ATTACK-04,2026-10-09 09:16:35,PROCESS,CRITICAL,alice_finance,powershell.exe,EVT-ATTACK-03,powershell.exe -EncodedCommand,Encoded PowerShell executed,powershell.exe -e aW52b2tl...
+EVT-ATTACK-05,2026-10-09 09:17:01,NETWORK,CRITICAL,alice_finance,powershell.exe,EVT-ATTACK-04,185.220.101.5:4444,Outbound C2 connection,TCP 172.16.10.45:49152 -> 185.220.101.5:4444
+EVT-ATTACK-06,2026-10-09 09:18:20,FILE,HIGH,SYSTEM,rundll32.exe,EVT-ATTACK-04,C:\Windows\Temp\lsass.dmp,LSASS dump file created,"rundll32 comsvcs.dll, MiniDump 672 C:\Windows\Temp\lsass.dmp"

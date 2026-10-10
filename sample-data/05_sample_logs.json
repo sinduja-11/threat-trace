@@ -1,0 +1,26 @@
+[
+  {
+    "event_code": "EVT-JSON-01",
+    "event_time": "2026-10-09T12:00:00.000Z",
+    "event_type": "LOGIN",
+    "severity": "LOW",
+    "hostname": "db-sql-01.corp.internal",
+    "user_name": "db_admin",
+    "process_name": "sshd",
+    "parent_event_id": null,
+    "target": "db-sql-01",
+    "description": "SSH Remote Admin Login"
+  },
+  {
+    "event_code": "EVT-JSON-02",
+    "event_time": "2026-10-09T12:01:15.000Z",
+    "event_type": "PROCESS",
+    "severity": "HIGH",
+    "hostname": "db-sql-01.corp.internal",
+    "user_name": "db_admin",
+    "process_name": "mysqldump",
+    "parent_event_id": "EVT-JSON-01",
+    "target": "/tmp/customer_db_backup.sql",
+    "description": "Full database dump initiated"
+  }
+]

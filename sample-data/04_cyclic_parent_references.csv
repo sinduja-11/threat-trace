@@ -1,0 +1,3 @@
+event_code,event_time,event_type,severity,hostname,user_name,process_name,parent_event_id,target,description
+EVT-CYCLE-01,2026-10-09 11:00:00,PROCESS,HIGH,dc01.corp.internal,admin,processA.exe,EVT-CYCLE-02,targetA,Cycle Node 1 (points to Node 2)
+EVT-CYCLE-02,2026-10-09 11:00:05,PROCESS,HIGH,dc01.corp.internal,admin,processB.exe,EVT-CYCLE-01,targetB,Cycle Node 2 (points to Node 1)
