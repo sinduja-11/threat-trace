@@ -45,11 +45,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- H2 Database for In-Memory Unit & Integration Testing Fallback -->
+        <!-- H2 Database for local in-memory runs and tests -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- CSV Processing Library -->

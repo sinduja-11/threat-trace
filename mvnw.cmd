@@ -84,7 +84,7 @@ for %%i in ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties") do (
     set MAVEN_WRAPPER_PROPERTIES=%%~fi
 )
 
-%JAVA_HOME%\bin\java.exe %MAVEN_OPTS% -classpath %WRAPPER_JAR% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" %WRAPPER_LAUNCHER% %*
+"%JAVA_HOME%\bin\java.exe" %MAVEN_OPTS% -classpath %WRAPPER_JAR% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" %WRAPPER_LAUNCHER% %*
 if ERRORLEVEL 1 goto error
 goto end
 
@@ -97,8 +97,6 @@ if not "%MAVEN_SKIP_RC%" == "" goto skipRcPost
 @if exist "%HOME%\mavenrc_post.bat" call "%HOME%\mavenrc_post.bat"
 @if exist "%HOME%\mavenrc_post.cmd" call "%HOME%\mavenrc_post.cmd"
 :skipRcPost
-
-@if "%MAVEN_BATCH_PAUSE%" == "on" %MAVEN_BATCH_PAUSE_STR%
 
 if "%JAVA_HOME%" == "" exit /b %ERROR_CODE%
 exit /b %ERROR_CODE%
